@@ -1,0 +1,1 @@
+module.exports = require('./lib/se-runner-framework-jasmine').SeRunnerFrameworkJasmine;
