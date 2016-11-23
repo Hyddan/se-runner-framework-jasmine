@@ -21,9 +21,9 @@
   "author": "Daniel Hedenius",
   "license": "WTFPL-2.0",
   "bugs": {
-    "url": "https://github.com/Hyddan/se-runner/issues"
+    "url": "https://github.com/Hyddan/se-runner-framework-jasmine/issues"
   },
-  "homepage": "https://github.com/Hyddan/se-runner#readme",
+  "homepage": "https://github.com/Hyddan/se-runner-framework-jasmine#readme",
   "dependencies": {
     "jasmine-core": "^2.4.1",
     "jasmine-spec-reporter": "^2.4.0",
