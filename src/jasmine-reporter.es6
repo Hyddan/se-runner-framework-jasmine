@@ -9,6 +9,7 @@ export default class JasmineReporter extends IReporter {
             _report: new Report(),
             currentSpec: null,
             currentSuite: null,
+            ongoingSuites: [],
             options: Object.assign({}, options),
             start: null,
             suites: {}
@@ -42,16 +43,16 @@ export default class JasmineReporter extends IReporter {
         };
     }
 
-    specDone (result) {
-        switch (this.currentSpec.status = result.status) {
+    specDone (specInfo) {
+        switch (this.currentSpec.status = specInfo.status) {
             case 'failed':
                 ++this._report.metrics.specs.failed;
                 this.currentSuite.success = false;
 
-                for (let i = 0; i < result.failedExpectations.length; i++) {
-                    this.currentSpec.log.push(result.fullName);
-                    this.currentSpec.log.push(result.failedExpectations[i].message);
-                    this.currentSpec.log.push(result.failedExpectations[i].stack);
+                for (let i = 0; i < specInfo.failedExpectations.length; i++) {
+                    this.currentSpec.log.push(specInfo.fullName);
+                    this.currentSpec.log.push(specInfo.failedExpectations[i].message);
+                    this.currentSpec.log.push(specInfo.failedExpectations[i].stack);
                 }
                 break;
             case 'pending':
@@ -67,17 +68,17 @@ export default class JasmineReporter extends IReporter {
 
     suiteStarted (suiteInfo) {
         ++this._report.metrics.suites.total;
-        this.suites[suiteInfo.id] = this.currentSuite = {
+        this.ongoingSuites.push(this.suites[suiteInfo.id] = this.currentSuite = {
             description: suiteInfo.description,
             fullName: suiteInfo.fullName,
             id: suiteInfo.id,
             specs: {},
             success: true
-        };
+        });
     }
 
     suiteDone () {
         this.currentSuite.success ? ++this._report.metrics.suites.succeeded : ++this._report.metrics.suites.failed;
-        this.currentSuite = null;
+        this.currentSuite = null || (0 < this.ongoingSuites.length && (this.currentSuite = this.ongoingSuites.pop()));
     }
 }
