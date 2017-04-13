@@ -19,5 +19,6 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 
 ## Release History
 
+ * 2017-04-13   v1.1.1   Fixed bug in JasmineReporter when nested suites are used.
  * 2016-12-09   v1.1.0   Create jasmine reporter and communicate result up to SeRunner.
  * 2016-05-10   v1.0.0   Initial version.
